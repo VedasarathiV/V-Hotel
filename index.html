@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>V Hotel</title>
+    <link rel="icon" type="image/x-icon" href="https://media.istockphoto.com/id/1389730936/vector/grill-food-emblem-chef-with-fork-and-spatula-for-barbecue-logo-cartoon-character-vector.jpg?s=612x612&w=0&k=20&c=PMImEoxBxXrWstQadaeePHi4Wtke-G6RkG0G8pFKJg0=">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NH7JTMGT');</script>
+<!-- End Google Tag Manager -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+        
+        * {
+            font-family: 'Inter', sans-serif;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            overflow-x: hidden;
+        }
+        
+        .gradient-primary {
+            background: linear-gradient(135deg, #ff512f 0%, #dd2476 50%, #6a11cb 100%);
+        }
+        
+        .gradient-soft {
+            background: linear-gradient(135deg, rgba(255, 81, 47, 0.08), rgba(221, 36, 118, 0.08), rgba(106, 17, 203, 0.08));
+        }
+        
+        .gradient-button {
+            background: linear-gradient(135deg, #ff512f, #dd2476);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateZ(0);
+        }
+        
+        .gradient-button:hover {
+            background: linear-gradient(135deg, #dd2476, #6a11cb);
+            transform: translate3d(0, -2px, 0);
+            box-shadow: 0 10px 25px rgba(221, 36, 118, 0.4);
+        }
+        
+        .card-modern {
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(255, 81, 47, 0.08);
+            transform: translateZ(0);
+        }
+        
+        .card-modern:hover {
+            transform: translate3d(0, -8px, 0);
+            box-shadow: 0 20px 40px rgba(221, 36, 118, 0.12);
+        }
+        
+        .floating-animation {
+            animation: float 8s ease-in-out infinite;
+            will-change: transform;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translate3d(0, 0, 0); }
+            50% { transform: translate3d(0, -12px, 0); }
+        }
+        
+        .page {
+            display: none;
+        }
+        
+        .page.active {
+            display: block;
+        }
+        
+        .nav-link {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link.active {
+            background: rgba(255, 255, 255, 0.25);
+            border-radius: 30px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .price-tag {
+            background: linear-gradient(135deg, #ff512f, #dd2476);
+            color: white;
+            padding: 10px 18px;
+            border-radius: 25px;
+            font-weight: 800;
+            font-size: 18px;
+            box-shadow: 0 4px 15px rgba(255, 81, 47, 0.3);
+        }
+        
+        .category-badge {
+            background: linear-gradient(135deg, rgba(106, 17, 203, 0.12), rgba(221, 36, 118, 0.12));
+            color: #6a11cb;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+            border: 1px solid rgba(106, 17, 203, 0.2);
+        }
+        
+        .hero-text {
+            background: linear-gradient(135deg, #ff512f, #dd2476, #6a11cb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .chatbot-container {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 1000;
+        }
+        
+        .chatbot-toggle {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff512f, #dd2476);
+            cursor: pointer;
+            box-shadow: 0 8px 30px rgba(221, 36, 118, 0.4);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            backdrop-filter: blur(10px);
+        }
+        
+        .chatbot-toggle:hover {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 15px 40px rgba(106, 17, 203, 0.5);
+        }
+        
+        .chatbot-window {
+            position: fixed;
+            bottom: 100px;
+            right: 10px;
+            left: 10px;
+            width: auto;
+            max-width: 380px;
+            height: 80vh;
+            max-height: 520px;
+            background: white;
+            border-radius: 28px;
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.15);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            border: 2px solid rgba(255, 81, 47, 0.1);
+            backdrop-filter: blur(20px);
+        }
+        
+        @media (min-width: 640px) {
+            .chatbot-window {
+                position: absolute;
+                right: 0;
+                left: auto;
+                width: 380px;
+            }
+        }
+        
+        .chatbot-header {
+            background: linear-gradient(135deg, #ff512f, #dd2476, #6a11cb);
+            color: white;
+            padding: 24px;
+            text-align: center;
+            font-weight: 600;
+        }
+        
+        .robot-avatar {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: white;
+            padding: 10px;
+            animation: pulse 3s infinite;
+            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3);
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+        }
+        
+        .chatbot-messages {
+            flex: 1;
+            padding: 24px;
+            overflow-y: auto;
+            background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+        }
+        
+        .message {
+            margin-bottom: 16px;
+            padding: 14px 18px;
+            border-radius: 24px;
+            max-width: 85%;
+            font-weight: 500;
+            line-height: 1.5;
+        }
+        
+        .message.bot {
+            background: linear-gradient(135deg, #ffffff, #f8fafc);
+            color: #334155;
+            align-self: flex-start;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .message.user {
+            background: linear-gradient(135deg, #ff512f, #dd2476);
+            color: white;
+            align-self: flex-end;
+            margin-left: auto;
+            box-shadow: 0 4px 15px rgba(255, 81, 47, 0.3);
+        }
+        
+        .chatbot-input {
+            display: flex;
+            padding: 24px;
+            background: white;
+            border-top: 1px solid #e2e8f0;
+            gap: 12px;
+        }
+        
+        .chatbot-input input {
+            flex: 1;
+            padding: 14px 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 28px;
+            outline: none;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .chatbot-input input:focus {
+            border-color: #ff512f;
+            box-shadow: 0 0 0 3px rgba(255, 81, 47, 0.1);
+        }
+        
+        .chatbot-input button {
+            padding: 14px 28px;
+            background: linear-gradient(135deg, #ff512f, #dd2476);
+            color: white;
+            border: none;
+            border-radius: 28px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+        
+        .chatbot-input button:hover {
+            background: linear-gradient(135deg, #dd2476, #6a11cb);
+            transform: scale(1.05);
+        }
+        
+        .mobile-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 40;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .mobile-menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .version-badge {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: linear-gradient(135deg, #ff512f, #dd2476);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 14px;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(255, 81, 47, 0.3);
+        }
+        
+        .performance-optimized {
+            transform: translateZ(0);
+            backface-visibility: hidden;
+            perspective: 1000px;
+        }
+        
+        .smooth-scroll {
+            scroll-behavior: smooth;
+        }
+        
+        @media (max-width: 768px) {
+            .floating-animation {
+                animation-duration: 6s;
+            }
+            
+            .card-modern:hover {
+                transform: translate3d(0, -4px, 0);
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .chatbot-window {
+                bottom: 80px;
+                border-radius: 20px;
+            }
+
+            .hero-text {
+                font-size: 3.5rem;
+            }
+
+            .card-modern {
+                padding: 1.5rem;
+            }
+
+            h2 {
+                font-size: 3rem;
+            }
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 performance-optimized">
+    <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NH7JTMGT"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" id="mobile-menu-overlay" onclick="toggleMobileMenu()"></div>
+
+    <!-- Navigation -->
+    <nav class="gradient-primary shadow-2xl fixed w-full top-0 z-50 backdrop-blur-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex items-center">
+                    <div class="w-16 h-16 rounded-full bg-white p-2 mr-4 shadow-xl">
+                        <img src="https://media.istockphoto.com/id/1389730936/vector/grill-food-emblem-chef-with-fork-and-spatula-for-barbecue-logo-cartoon-character-vector.jpg?s=612x612&w=0&k=20&c=PMImEoxBxXrWstQadaeePHi4Wtke-G6RkG0G8pFKJg0=" alt="V Hotel Logo" class="w-full h-full rounded-full object-cover">
+                    </div>
+                    <div class="text-3xl font-black text-white">
+                        V Hotel
+                    </div>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <button onclick="showPage('home')" class="nav-link px-8 py-3 font-bold text-white transition-all duration-300 active rounded-full hover:bg-white hover:bg-opacity-20">Home</button>
+                        <button onclick="showPage('menu')" class="nav-link px-8 py-3 font-bold text-white transition-all duration-300 rounded-full hover:bg-white hover:bg-opacity-20">Menu</button>
+                        <button onclick="showPage('about')" class="nav-link px-8 py-3 font-bold text-white transition-all duration-300 rounded-full hover:bg-white hover:bg-opacity-20">About</button>
+                        <button onclick="showPage('contact')" class="nav-link px-8 py-3 font-bold text-white transition-all duration-300 rounded-full hover:bg-white hover:bg-opacity-20">Contact</button>
+                    </div>
+                </div>
+                <div class="md:hidden">
+                    <button onclick="toggleMobileMenu()" class="text-white p-3 rounded-xl hover:bg-white hover:bg-opacity-20 transition-all duration-300">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="hidden md:hidden bg-white bg-opacity-95 backdrop-blur-xl rounded-2xl mx-4 mb-4 shadow-2xl border border-white border-opacity-30">
+                <div class="px-6 py-6 space-y-3">
+                    <button onclick="showPage('home'); toggleMobileMenu();" class="block w-full text-left px-6 py-4 text-gray-800 font-bold rounded-xl hover:bg-gradient-to-r hover:from-pink-500 hover:to-purple-600 hover:text-white transition-all duration-300 transform hover:scale-105">🏠 Home</button>
+                    <button onclick="showPage('menu'); toggleMobileMenu();" class="block w-full text-left px-6 py-4 text-gray-800 font-bold rounded-xl hover:bg-gradient-to-r hover:from-pink-500 hover:to-purple-600 hover:text-white transition-all duration-300 transform hover:scale-105">🍽️ Menu</button>
+                    <button onclick="showPage('about'); toggleMobileMenu();" class="block w-full text-left px-6 py-4 text-gray-800 font-bold rounded-xl hover:bg-gradient-to-r hover:from-pink-500 hover:to-purple-600 hover:text-white transition-all duration-300 transform hover:scale-105">ℹ️ About</button>
+                    <button onclick="showPage('contact'); toggleMobileMenu();" class="block w-full text-left px-6 py-4 text-gray-800 font-bold rounded-xl hover:bg-gradient-to-r hover:from-pink-500 hover:to-purple-600 hover:text-white transition-all duration-300 transform hover:scale-105">📞 Contact</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Home Page -->
+    <div id="home-page" class="page active">
+        <!-- Hero Section -->
+        <section class="gradient-soft pt-20 pb-20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+                    <div class="text-center lg:text-left">
+                        <h1 class="text-5xl sm:text-6xl lg:text-7xl font-black mb-8 leading-tight">
+                            <span class="hero-text">Delicious Food 🍴</span>
+                        </h1>
+                        <p class="text-xl sm:text-2xl mb-10 text-gray-700 font-semibold leading-relaxed">
+                            From spicy thalis to mouth-watering non-veg meals – we bring your cravings to life with authentic flavors.
+                        </p>
+                        <div class="flex flex-col sm:flex-row gap-6 justify-center lg:justify-start">
+                            <button onclick="showPage('menu')" class="gradient-button text-white px-12 py-5 rounded-full font-black text-xl shadow-2xl w-full sm:w-auto transform hover:scale-105">
+                                Order Now 🚀
+                            </button>
+                            <button onclick="showPage('about')" class="bg-white text-gray-800 px-10 py-5 rounded-full font-bold text-xl border-3 border-gray-300 hover:border-pink-400 transition-all duration-300 w-full sm:w-auto shadow-xl">
+                                Learn More
+                            </button>
+                        </div>
+                    </div>
+                    <div class="floating-animation mt-12 lg:mt-0">
+                        <div class="card-modern p-8 sm:p-10 shadow-2xl">
+                            <div class="flex flex-col sm:flex-row items-center gap-6 sm:gap-8">
+                                <img src="https://i.pinimg.com/1200x/81/ae/4e/81ae4ee83f5c05059d7141de46fa39b7.jpg" alt="Today's Special" class="w-full sm:w-1/2 h-40 sm:h-44 rounded-3xl object-cover shadow-xl">
+                                <div class="w-full sm:w-1/2 text-center sm:text-left">
+                                    <div class="category-badge mb-4">🔥 Everyday's Special</div>
+                                    <h3 class="text-2xl sm:text-3xl font-black text-gray-800 mb-3">Unlimited Non-veg Meals</h3>
+                                    <p class="text-gray-600 mb-4 font-semibold text-lg">⏰ 11:00 AM - 3:00 PM</p>
+                                    <div class="price-tag inline-block text-xl">₹149</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Categories -->
+        <section class="py-24 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-20">
+                    <h2 class="text-6xl font-black text-gray-800 mb-6">Popular Categories</h2>
+                    <p class="text-2xl text-gray-600 font-bold">Discover our most loved dishes</p>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 sm:gap-12 max-w-5xl mx-auto">
+                    <div class="card-modern p-8 sm:p-12 text-center cursor-pointer group" onclick="showPage('menu')">
+                        <div class="text-7xl sm:text-9xl mb-8 group-hover:scale-110 transition-transform duration-500">🍛</div>
+                        <h3 class="text-2xl sm:text-3xl font-black text-gray-800 mb-4">Non-Veg Meals</h3>
+                        <p class="text-gray-600 mb-6 font-bold text-lg">Chicken, Mutton & Fish Specialties</p>
+                        <div class="category-badge text-base">Fresh & Authentic</div>
+                    </div>
+                    <div class="card-modern p-8 sm:p-12 text-center cursor-pointer group" onclick="showPage('menu')">
+                        <div class="text-7xl sm:text-9xl mb-8 group-hover:scale-110 transition-transform duration-500">🫓</div>
+                        <h3 class="text-2xl sm:text-3xl font-black text-gray-800 mb-4">Parotta Varieties</h3>
+                        <p class="text-gray-600 mb-6 font-bold text-lg">Crispy, Layered & Delicious</p>
+                        <div class="category-badge text-base">Made Fresh Daily</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Menu Page -->
+    <div id="menu-page" class="page pt-20">
+        <section class="py-24 gradient-soft">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-20">
+                    <h2 class="text-6xl font-black text-gray-800 mb-6">Our Menu</h2>
+                    <p class="text-2xl text-gray-600 font-bold">Authentic dishes crafted with love</p>
+                </div>
+                
+                <!-- Non-Veg Meals -->
+                <div class="mb-24">
+                    <h3 class="text-5xl font-black text-gray-800 mb-16 text-center">🍛 Non-Veg Meals</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10">
+                        <div class="card-modern overflow-hidden group">
+                            <div class="h-64 overflow-hidden">
+                                <img src="https://i.pinimg.com/736x/81/ae/4e/81ae4ee83f5c05059d7141de46fa39b7.jpg" alt="Chicken Meals" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                            </div>
+                            <div class="p-8">
+                                <div class="category-badge mb-4">🔥 Popular</div>
+                                <h3 class="text-2xl font-black text-gray-800 mb-3">Chicken Meals</h3>
+                                <p class="text-gray-600 mb-6 font-semibold text-lg">Spicy chicken curry with rice, sambar & rasam</p>
+                                <div class="flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-0">
+                                    <div class="price-tag text-xl">₹149</div>
+                                    <button onclick="showPage('contact')" class="gradient-button text-white px-8 py-3 rounded-full font-black text-lg w-full sm:w-auto">
+                                        Order Now
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-modern overflow-hidden group">
+                            <div class="h-64 overflow-hidden">
+                                <img src="https://i.ytimg.com/vi/FT5kLcUrFTc/maxresdefault.jpg" alt="Mutton Meals" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                            </div>
+                            <div class="p-8">
+                                <div class="category-badge mb-4">⭐ Premium</div>
+                                <h3 class="text-2xl font-black text-gray-800 mb-3">Mutton Meals</h3>
+                                <p class="text-gray-600 mb-6 font-semibold text-lg">Tender mutton with aromatic basmati rice</p>
+                                <div class="flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-0">
+                                    <div class="price-tag text-xl">₹250</div>
+                                    <button onclick="showPage('contact')" class="gradient-button text-white px-8 py-3 rounded-full font-black text-lg w-full sm:w-auto">
+                                        Order Now
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-modern overflow-hidden group">
+                            <div class="h-64 overflow-hidden">
+                                <img src="https://i.pinimg.com/736x/a7/0f/53/a70f5393ad6ab7f3b0edf6bc19f845f8.jpg" alt="Fish Curry" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                            </div>
+                            <div class="p-8">
+                                <div class="category-badge mb-4">🌊 Fresh</div>
+                                <h3 class="text-2xl font-black text-gray-800 mb-3">Fish Curry Meals</h3>
+                                <p class="text-gray-600 mb-6 font-semibold text-lg">Fresh fish curry with coconut & spices</p>
+                                <div class="flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-0">
+                                    <div class="price-tag text-xl">₹200</div>
+                                    <button onclick="showPage('contact')" class="gradient-button text-white px-8 py-3 rounded-full font-black text-lg w-full sm:w-auto">
+                                        Order Now
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Parotta -->
+                <div class="mb-20">
+                    <h3 class="text-5xl font-black text-gray-800 mb-16 text-center">🫓 Parotta Varieties</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10">
+                        <div class="card-modern overflow-hidden group">
+                            <div class="h-64 overflow-hidden">
+                                <img src="https://www.licious.in/blog/wp-content/uploads/2022/12/Shutterstock_1432403939.jpg" alt="Kothu Parotta" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                            </div>
+                            <div class="p-8">
+                                <div class="category-badge mb-4">🔥 Signature</div>
+                                <h3 class="text-2xl font-black text-gray-800 mb-3">Kothu Parotta</h3>
+                                <p class="text-gray-600 mb-6 font-semibold text-lg">Shredded parotta with egg, chicken & spices</p>
+                                <div class="flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-0">
+                                    <div class="price-tag text-xl">₹120</div>
+                                    <button onclick="showPage('contact')" class="gradient-button text-white px-8 py-3 rounded-full font-black text-lg w-full sm:w-auto">
+                                        Order Now
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-modern overflow-hidden group">
+                            <div class="h-64 overflow-hidden">
+                                <img src="https://images.news18.com/ibnlive/uploads/2022/06/malabar-paratha-16561669553x2.jpg" alt="Plain Parotta" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                            </div>
+                            <div class="p-8">
+                                <div class="category-badge mb-4">🥖 Classic</div>
+                                <h3 class="text-2xl font-black text-gray-800 mb-3">Plain Parotta</h3>
+                                <p class="text-gray-600 mb-6 font-semibold text-lg">Flaky layered bread perfect with curry</p>
+                                <div class="flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-0">
+                                    <div class="price-tag text-xl">₹25</div>
+                                    <button onclick="showPage('contact')" class="gradient-button text-white px-8 py-3 rounded-full font-black text-lg w-full sm:w-auto">
+                                        Order Now
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-modern overflow-hidden group">
+                            <div class="h-64 overflow-hidden">
+                                <img src="https://i.pinimg.com/736x/ed/cb/78/edcb78acbed69622260be6f644165f69.jpg" alt="Egg Parotta" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                            </div>
+                            <div class="p-8">
+                                <div class="category-badge mb-4">🥚 Special</div>
+                                <h3 class="text-2xl font-black text-gray-800 mb-3">Egg Parotta</h3>
+                                <p class="text-gray-600 mb-6 font-semibold text-lg">Parotta stuffed with spiced scrambled eggs</p>
+                                <div class="flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-0">
+                                    <div class="price-tag text-xl">₹40</div>
+                                    <button onclick="showPage('contact')" class="gradient-button text-white px-8 py-3 rounded-full font-black text-lg w-full sm:w-auto">
+                                        Order Now
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- About Page -->
+    <div id="about-page" class="page pt-20">
+        <section class="py-24 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+                    <div>
+                        <h2 class="text-4xl sm:text-5xl lg:text-6xl font-black text-gray-800 mb-8 sm:mb-10">About V Hotel</h2>
+                        <p class="text-lg sm:text-xl text-gray-600 mb-6 sm:mb-8 font-semibold leading-relaxed">
+                            We're revolutionizing authentic cuisine delivery by combining traditional recipes with modern convenience. Our experienced chefs use time-honored techniques and the freshest ingredients.
+                        </p>
+                        <p class="text-lg sm:text-xl text-gray-600 mb-8 sm:mb-10 font-semibold leading-relaxed">
+                            At V Hotel, food is not just about taste – it's about an experience. We prepare every dish with love, fresh ingredients, and authentic spices that bring comfort and joy to every bite.
+                        </p>
+                        <button onclick="showPage('menu')" class="gradient-button text-white px-10 sm:px-12 py-4 sm:py-5 rounded-full font-black text-lg sm:text-xl w-full sm:w-auto shadow-2xl">
+                            Explore Our Menu 🍽️
+                        </button>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 sm:gap-10 mt-12 lg:mt-0">
+                        <div class="floating-animation">
+                            <div class="card-modern p-10 text-center">
+                                <div class="w-28 h-28 mx-auto mb-6 rounded-full overflow-hidden shadow-2xl">
+                                    <img src="WhatsApp Image 2025-08-16 at 14.20.18.jpeg" alt="Vadivelu G" class="w-full h-full object-cover">
+                                </div>
+                                <h3 class="text-2xl font-black text-gray-800 mb-3">Creator</h3>
+                                <p class="text-xl font-black mb-3 hero-text">Vadivelu G</p>
+                                <p class="text-gray-600 font-bold">Passionate about bringing authentic flavors to customers</p>
+                            </div>
+                        </div>
+                        <div class="floating-animation" style="animation-delay: 0.4s;">
+                            <div class="card-modern p-10 text-center">
+                                <div class="w-28 h-28 mx-auto mb-6 rounded-full overflow-hidden shadow-2xl">
+                                    <img src="WhatsApp Image 2025-08-16 at 14.23.03.jpeg" alt="R.valli" class="w-full h-full object-cover">
+                                </div>
+                                <h3 class="text-2xl font-black text-gray-800 mb-3">Owner</h3>
+                                <p class="text-xl font-black mb-3 hero-text">R.valli</p>
+                                <p class="text-gray-600 font-bold">Master chef with years of traditional cuisine expertise</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Contact Page -->
+    <div id="contact-page" class="page pt-20">
+        <section class="py-24 gradient-primary text-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-20">
+                    <h2 class="text-6xl font-black mb-6">Get In Touch</h2>
+                    <p class="text-2xl font-bold opacity-95">Ready to order? We'd love to serve you!</p>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10 mb-16 sm:mb-20">
+                    <div class="text-center bg-white bg-opacity-15 rounded-3xl p-8 sm:p-10 backdrop-blur-xl">
+                        <div class="text-5xl sm:text-6xl mb-6">📍</div>
+                        <h3 class="text-xl sm:text-2xl font-black mb-3">Location</h3>
+                        <p class="opacity-95 font-bold text-base sm:text-lg">Kurumurapalli<br>Krishnagiri, Tamil Nadu 635001</p>
+                    </div>
+                    <div class="text-center bg-white bg-opacity-15 rounded-3xl p-8 sm:p-10 backdrop-blur-xl">
+                        <div class="text-5xl sm:text-6xl mb-6">📞</div>
+                        <h3 class="text-xl sm:text-2xl font-black mb-3">Phone</h3>
+                        <p class="opacity-95 font-black text-xl sm:text-2xl">+91 9626941382</p>
+                    </div>
+                    <div class="text-center bg-white bg-opacity-15 rounded-3xl p-8 sm:p-10 backdrop-blur-xl sm:col-span-2 lg:col-span-1">
+                        <div class="text-5xl sm:text-6xl mb-6">⏰</div>
+                        <h3 class="text-xl sm:text-2xl font-black mb-3">Hours</h3>
+                        <p class="opacity-95 font-bold text-base sm:text-lg">Mon-Sun: 8AM - 10PM</p>
+                    </div>
+                </div>
+                
+                <!-- Contact Form -->
+                <div class="max-w-3xl mx-auto">
+                    <div class="card-modern p-12 text-gray-800">
+                        <h3 class="text-4xl font-black mb-10 text-center">Send us a Message</h3>
+                        <form class="space-y-8" id="contact-form">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
+                                <div>
+                                    <label class="block text-lg font-black mb-3">Name *</label>
+                                    <input type="text" required class="w-full px-5 sm:px-6 py-4 sm:py-5 border-3 border-gray-200 rounded-2xl focus:border-pink-400 focus:outline-none transition-all font-bold text-base sm:text-lg" placeholder="Your Name" id="contact-name">
+                                </div>
+                                <div>
+                                    <label class="block text-lg font-black mb-3">Phone *</label>
+                                    <input type="tel" required class="w-full px-5 sm:px-6 py-4 sm:py-5 border-3 border-gray-200 rounded-2xl focus:border-pink-400 focus:outline-none transition-all font-bold text-base sm:text-lg" placeholder="Your Phone" id="contact-phone">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-lg font-black mb-3">Email *</label>
+                                <input type="email" required class="w-full px-6 py-5 border-3 border-gray-200 rounded-2xl focus:border-pink-400 focus:outline-none transition-all font-bold text-lg" placeholder="Your Email" id="contact-email">
+                            </div>
+                            <div>
+                                <label class="block text-lg font-black mb-3">Message *</label>
+                                <textarea rows="5" required class="w-full px-6 py-5 border-3 border-gray-200 rounded-2xl focus:border-pink-400 focus:outline-none transition-all font-bold text-lg resize-none" placeholder="Your Message" id="contact-message"></textarea>
+                            </div>
+                            <button type="button" onclick="submitForm()" class="w-full gradient-button text-white py-5 rounded-2xl font-black text-xl transition-all duration-300 shadow-2xl" id="submit-btn">
+                                Send Message 🚀
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Enhanced Chatbot -->
+    <div class="chatbot-container">
+        <div class="chatbot-window" id="chatbot-window">
+            <div class="chatbot-header">
+                <div class="flex items-center justify-center gap-4 mb-3">
+                    <img src="https://cdn-icons-png.flaticon.com/512/4712/4712027.png" alt="V Hotel Assistant" class="robot-avatar">
+                    <div>
+                        <h3 class="font-black text-xl">🍛 V Hotel Assistant</h3>
+                        <div class="text-sm opacity-95 font-semibold" id="robot-status">Ready to help you!</div>
+                    </div>
+                </div>
+            </div>
+            <div class="chatbot-messages" id="chatbot-messages">
+                <div class="message bot">
+                    Hey there! 👋 I'm your V Hotel assistant. I can help you with our menu, prices, and recommendations. What delicious dish are you craving today?
+                </div>
+            </div>
+            <div class="chatbot-input">
+                <input type="text" id="chatbot-input" placeholder="Ask about our food..." onkeypress="handleChatKeyPress(event)">
+                <button onclick="sendMessage()" id="chat-send-btn">Send</button>
+            </div>
+        </div>
+        <button class="chatbot-toggle" onclick="toggleChatbot()">
+            <span class="text-3xl">💬</span>
+        </button>
+    </div>
+
+    <!-- Enhanced Footer -->
+    <footer class="gradient-primary text-white py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10">
+                <div class="sm:col-span-2 lg:col-span-1">
+                    <div class="flex items-center mb-6 sm:mb-8">
+                        <div class="w-12 sm:w-14 h-12 sm:h-14 rounded-full bg-white p-2 mr-4">
+                            <img src="https://media.istockphoto.com/id/1389730936/vector/grill-food-emblem-chef-with-fork-and-spatula-for-barbecue-logo-cartoon-character-vector.jpg?s=612x612&w=0&k=20&c=PMImEoxBxXrWstQadaeePHi4Wtke-G6RkG0G8pFKJg0=" alt="V Hotel Logo" class="w-full h-full rounded-full object-cover">
+                        </div>
+                        <div class="text-2xl sm:text-3xl font-black">V Hotel</div>
+                    </div>
+                    <p class="opacity-95 font-bold text-base sm:text-lg">Modern food delivery with authentic traditional flavors and recipes.</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-black mb-6">Quick Links</h3>
+                    <ul class="space-y-4 opacity-95">
+                        <li><button onclick="showPage('home')" class="hover:opacity-100 transition-opacity font-bold text-lg">Home</button></li>
+                        <li><button onclick="showPage('menu')" class="hover:opacity-100 transition-opacity font-bold text-lg">Menu</button></li>
+                        <li><button onclick="showPage('about')" class="hover:opacity-100 transition-opacity font-bold text-lg">About</button></li>
+                        <li><button onclick="showPage('contact')" class="hover:opacity-100 transition-opacity font-bold text-lg">Contact</button></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-black mb-6">Categories</h3>
+                    <ul class="space-y-4 opacity-95 font-bold text-lg">
+                        <li>Non-Veg Meals</li>
+                        <li>Parotta Varieties</li>
+                        <li>Daily Specials</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-black mb-6">Follow Us</h3>
+                    <div class="flex space-x-5">
+                        <button class="w-14 h-14 rounded-full bg-white bg-opacity-20 flex items-center justify-center text-2xl hover:bg-opacity-30 transition-all transform hover:scale-110">📘</button>
+                        <button class="w-14 h-14 rounded-full bg-white bg-opacity-20 flex items-center justify-center text-2xl hover:bg-opacity-30 transition-all transform hover:scale-110">📷</button>
+                        <button class="w-14 h-14 rounded-full bg-white bg-opacity-20 flex items-center justify-center text-2xl hover:bg-opacity-30 transition-all transform hover:scale-110">🐦</button>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-white border-opacity-25 mt-16 pt-10 text-center opacity-95">
+                <p class="font-bold text-lg">&copy; 2024 V Hotel v55. All rights reserved. Made with ❤️ for food lovers.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Enhanced Performance Variables
+        let isAnimating = false;
+        let currentPage = 'home';
+        let chatbotOpen = false;
+        let mobileMenuOpen = false;
+
+        // Enhanced Page Navigation with Smooth Transitions
+        function showPage(pageId) {
+            if (currentPage === pageId) return;
+
+            const currentPageEl = document.getElementById(currentPage + '-page');
+            const targetPageEl = document.getElementById(pageId + '-page');
+
+            if (currentPageEl) {
+                currentPageEl.classList.remove('active');
+            }
+
+            if (targetPageEl) {
+                targetPageEl.classList.add('active');
+            }
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            updateNavigation(pageId);
+            currentPage = pageId;
+        }
+
+        // Enhanced Navigation Update
+        function updateNavigation(pageId) {
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.textContent.toLowerCase().trim() === pageId.toLowerCase()) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        // Enhanced Form Submission
+        function submitForm() {
+            const form = document.getElementById('contact-form');
+            const button = document.getElementById('submit-btn');
+            const name = document.getElementById('contact-name').value.trim();
+            const phone = document.getElementById('contact-phone').value.trim();
+            const email = document.getElementById('contact-email').value.trim();
+            const message = document.getElementById('contact-message').value.trim();
+
+            if (name && phone && email && message) {
+                const whatsappUrl = `https://wa.me/9626941382?text=Name: ${encodeURIComponent(name)}%0APhone: ${encodeURIComponent(phone)}%0AEmail: ${encodeURIComponent(email)}%0AMessage: ${encodeURIComponent(message)}`;
+                window.open(whatsappUrl, '_blank');
+                
+                // Simulate sending
+                button.disabled = true;
+                button.innerHTML = '<span class="loading-spinner"></span> Sending...';
+                
+                setTimeout(() => {
+                    button.innerHTML = 'Message Sent! 🎉';
+                    button.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+                    form.reset();
+                    
+                    // Reset button
+                    setTimeout(() => {
+                        button.innerHTML = 'Send Message 🚀';
+                        button.style.background = '';
+                        button.disabled = false;
+                    }, 3000);
+                }, 2000);
+            } else {
+                // Shake animation for invalid form
+                button.style.animation = 'shake 0.5s ease-in-out';
+                setTimeout(() => {
+                    button.style.animation = '';
+                }, 500);
+                
+                // Focus first invalid field
+                const firstInvalid = form.querySelector('input:invalid, textarea:invalid');
+                if (firstInvalid) firstInvalid.focus();
+            }
+        }
+
+        // Enhanced Chatbot
+        function toggleChatbot() {
+            const chatbotWindow = document.getElementById('chatbot-window');
+            const overlay = document.getElementById('mobile-menu-overlay');
+            
+            if (chatbotOpen) {
+                chatbotWindow.style.display = 'none';
+                chatbotOpen = false;
+            } else {
+                chatbotWindow.style.display = 'flex';
+                chatbotOpen = true;
+                document.getElementById('chatbot-input').focus();
+            }
+        }
+        
+        function sendMessage() {
+            const input = document.getElementById('chatbot-input');
+            const sendBtn = document.getElementById('chat-send-btn');
+            const message = input.value.trim();
+            
+            if (message) {
+                addMessage(message, 'user');
+                input.value = '';
+                
+                // Show typing indicator
+                sendBtn.innerHTML = '<span class="loading-spinner"></span>';
+                sendBtn.disabled = true;
+                
+                setTimeout(() => {
+                    const response = getBotResponse(message);
+                    addMessage(response, 'bot');
+                    sendBtn.innerHTML = 'Send';
+                    sendBtn.disabled = false;
+                }, 1500);
+            }
+        }
+        
+        function addMessage(text, sender) {
+            const messagesContainer = document.getElementById('chatbot-messages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}`;
+            messageDiv.textContent = text;
+            messageDiv.style.opacity = '0';
+            messageDiv.style.transform = 'translateY(20px)';
+            
+            messagesContainer.appendChild(messageDiv);
+            
+            // Animate in
+            setTimeout(() => {
+                messageDiv.style.opacity = '1';
+                messageDiv.style.transform = 'translateY(0)';
+            }, 100);
+            
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+        
+        function getBotResponse(message) {
+            const lowerMessage = message.toLowerCase();
+            
+            const responses = {
+                menu: "🍽️ We serve amazing authentic cuisine! Our specialties include Chicken Meals (₹149), Mutton Meals (₹250), Fish Curry Meals (₹200), and various Parottas. What sounds good to you?",
+                price: "💰 Our prices range from ₹25 for Plain Parotta to ₹250 for Mutton Meals. Our Daily Special unlimited non-veg meals are just ₹149 (11:00 AM to 3:00 PM)! Great value! 🔥",
+                chicken: "🍗 Our Chicken Meals (₹149) are super popular! Comes with spicy chicken curry, rice, sambar, and rasam. Perfect comfort food!",
+                mutton: "🥩 Our Mutton Meals (₹250) are premium quality with tender mutton pieces and aromatic spices. A true delicacy!",
+                parotta: "🫓 We have amazing parotta options: Plain (₹25), Egg (₹40), and Kothu Parotta (₹120). The Kothu is our signature dish - absolutely delicious!",
+                special: "⭐ Our Daily Special is unlimited Non-veg meals for just ₹149 (11:00 AM to 3:00 PM)! It's incredible value with authentic flavors. Don't miss it!",
+                recommend: "🌟 I highly recommend our Chicken Meals or Kothu Parotta - they're customer favorites! For the best deal, try our Daily Special unlimited meals at ₹149!",
+                hello: "Hey there! 👋 Welcome to V Hotel v55! I'm excited to help you discover our delicious authentic cuisine. What are you in the mood for today?",
+                hours: "⏰ We're open Monday to Sunday from 8AM to 10PM. You can order anytime during these hours for fresh, hot food!",
+                location: "📍 Find us at Kurumurapalli, Krishnagiri, Tamil Nadu 635001. Call us at +91 9626941382 for quick orders!"
+            };
+            
+            for (const [key, response] of Object.entries(responses)) {
+                if (lowerMessage.includes(key)) {
+                    return response;
+                }
+            }
+            
+            return "😊 I'm here to help with anything about our menu, prices, recommendations, location, or hours. What would you like to know about our delicious food?";
+        }
+        
+        function handleChatKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        // Enhanced Mobile Menu
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            const overlay = document.getElementById('mobile-menu-overlay');
+            
+            if (mobileMenuOpen) {
+                mobileMenu.classList.add('hidden');
+                overlay.classList.remove('active');
+                mobileMenuOpen = false;
+            } else {
+                mobileMenu.classList.remove('hidden');
+                overlay.classList.add('active');
+                mobileMenuOpen = true;
+            }
+        }
+
+        // Performance Optimizations
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        // Initialize Application
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set initial page
+            showPage('home');
+            
+            // Add performance optimizations
+            document.body.style.willChange = 'auto';
+            
+            // Preload critical images
+            const criticalImages = [
+                'https://media.istockphoto.com/id/1389730936/vector/grill-food-emblem-chef-with-fork-and-spatula-for-barbecue-logo-cartoon-character-vector.jpg',
+                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgJC6aQxATV_PGtuudxjgmz4u90BAfRCE50pfQt14wjSFNrOZpBnU-HuSWerC9-GstjoE&usqp=CAU'
+            ];
+            
+            criticalImages.forEach(src => {
+                const img = new Image();
+                img.src = src;
+            });
+            
+            console.log('🚀 V Hotel v55 loaded successfully!');
+        });
+
+        // Add shake animation for form validation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                25% { transform: translateX(-5px); }
+                75% { transform: translateX(5px); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97009d2cc3e1a403',t:'MTc1NTM0Mzk3Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
